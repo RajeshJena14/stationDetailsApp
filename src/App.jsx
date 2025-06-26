@@ -8,6 +8,8 @@ import View from './pages/View';
 import Login from './pages/Login';
 import Khordha from './pages/Khordha';
 import Admin from './pages/Admin';
+import DivisionLanding from './pages/DivisionLanding'; 
+
 
 function App() {
   const location = useLocation();
@@ -28,6 +30,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/khordha" element={<Khordha />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/division" element={<DivisionLanding />} />
+
           </Routes>
         </main>
       </div>

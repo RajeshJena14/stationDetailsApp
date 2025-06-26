@@ -5,6 +5,8 @@ import Header from '../components/Header';
 
 import userIcon from "../assets/person.png";
 import passwordIcon from "../assets/password.png";
+import { useNavigate } from 'react-router-dom';
+
 <div className="app">
     <Header />
 </div>
@@ -12,6 +14,8 @@ import passwordIcon from "../assets/password.png";
 function Login({ onLoginSuccess }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -20,7 +24,8 @@ function Login({ onLoginSuccess }) {
             alert("Please enter both fields");
         } else {
 
-            onLoginSuccess();
+                navigate('/division');
+
         }
     };
 
