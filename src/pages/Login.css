@@ -1,6 +1,6 @@
 
 .login-container {
-  background-color: #005e8a;
+  background-color: #1a3c66;
   height: calc(100vh - 60px); /* assumes header height is 60px */
   display: flex;
   justify-content: center;
@@ -14,7 +14,7 @@
   padding: 2rem;
   background: white;
   border-radius: 10px;
-  box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 4px #ccc;
   text-align: center;
 }
 
@@ -47,7 +47,7 @@ button {
   width: 100%;
   padding: 10px;
   margin-top: 10px;
-  background-color: #005e8a;
+  background-color: #1a3c66;
   color: white;
   border: none;
   border-radius: 5px;
@@ -55,7 +55,7 @@ button {
 }
 
 .forgot-password {
-  color:#005e8a;
+  color:#1a3c66;
   text-decoration:none;
   font-size:14px;
   display:inline-block;

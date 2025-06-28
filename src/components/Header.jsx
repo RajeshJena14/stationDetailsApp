@@ -28,8 +28,10 @@ function Header() {
       marginRight: '10px'
     }}
   />
-) : (
-  <Link to="/login" className="login-button">Login</Link>
+) : (location.pathname !== '/login' && (
+    <Link to="/login" className="login-button">Login</Link>
+  )
+  
 )}
 
     </header>
