@@ -28,7 +28,7 @@ const View = () => {
   };
 
   return (
-    <div className="view-container">
+    <div className="dashboard-content">
       {/* Show dropdown only before division is selected */}
       {!division && (
         <>
@@ -68,7 +68,6 @@ const View = () => {
                   left: dot.x,
                   width: 10,
                   height: 10,
-                  backgroundColor: 'red',
                   borderRadius: '50%',
                   opacity: 0.7,
                   transform: 'translate(-50%, -50%)',
