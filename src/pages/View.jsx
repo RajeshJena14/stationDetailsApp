@@ -28,7 +28,7 @@ const View = () => {
   };
 
   return (
-    <div className="dashboard-content">
+    <div className="dashboard-content" style={{ marginTop: division != '' ? "0px" : "80px" }}>
       {/* Show dropdown only before division is selected */}
       {!division && (
         <>

@@ -3,16 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import './Upload.css';
 
 function Upload() {
-  const [image, setImage] = useState(null);
+  const [mapImage, setMapImage] = useState(null);
   const [previewURL, setPreviewURL] = useState('');
   const [showBrowse, setShowBrowse] = useState(false);
   const [showScan, setShowScan] = useState(false);
   const [showTable, setShowTable] = useState(false);
+  const [stationList, setStationList] = useState([]);
   const [stationFiles, setStationFiles] = useState({});
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setImage(file);
+    setMapImage(file);
     if (file) {
       setShowBrowse(true);
       setPreviewURL('');
@@ -25,15 +26,32 @@ function Upload() {
   };
 
   const handleBrowse = () => {
-    if (image) {
-      const imageURL = URL.createObjectURL(image);
+    if (mapImage) {
+      const imageURL = URL.createObjectURL(mapImage);
       setPreviewURL(imageURL);
       setShowScan(true);
     }
   };
 
   const handleScan = () => {
-    setShowTable(true);
+    const formData = new FormData();
+    formData.append('image', mapImage);
+    fetch('http://127.0.0.1:5000/process_stations', {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (!data.stations || data.stations.length === 0) {
+          setShowTable(false);
+        }
+        setStationList(data.stations);
+        setShowTable(true);
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Scan failed: " + err.message);
+      });
   };
 
   const handleStationUpload = (e, station) => {
@@ -42,8 +60,6 @@ function Upload() {
       setStationFiles(prev => ({ ...prev, [station]: file.name }));
     }
   };
-
-  const stationList = ['Bhubaneswar', 'Cuttack', 'Khurda Road', 'Puri', 'Sambalpur'];
 
   return (
     <div className="upload-container">
@@ -74,8 +90,8 @@ function Upload() {
             <thead>
               <tr>
                 <th>Station Name</th>
-                <th>Upload</th>
                 <th>Browse</th>
+                <th>Upload</th>
               </tr>
             </thead>
             <tbody>
@@ -84,10 +100,10 @@ function Upload() {
                   <td>{station}</td>
                   <td>
                     <label className="table-btn upload-label">
-                      Upload
+                      Browse
                       <input
                         type="file"
-                        accept="image/*"
+                        accept="application/pdf, image/*"
                         onChange={(e) => handleStationUpload(e, station)}
                         hidden
                       />
@@ -97,7 +113,9 @@ function Upload() {
                     )}
                   </td>
                   <td>
-                    <button className="table-btn">Browse</button>
+                    <label className="table-btn upload-label">
+                      Upload
+                    </label>
                   </td>
                 </tr>
               ))}
