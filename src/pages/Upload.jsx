@@ -10,6 +10,7 @@ function Upload() {
   const [showTable, setShowTable] = useState(false);
   const [stationList, setStationList] = useState([]);
   const [stationFiles, setStationFiles] = useState({});
+  const [division, setDivision] = useState('');
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -61,17 +62,37 @@ function Upload() {
     }
   };
 
-  return (
-    <div className="upload-container">
-      <div className="upload-box">
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-        {showBrowse && (
-          <button className="browse-btn" onClick={handleBrowse}>
-            Browse
-          </button>
-        )}
-      </div>
+  const handleDivisionChange = (e) => {
+    setDivision(e.target.value);
+  };
 
+  return (
+    <div className="upload-container dashboard-content" style={{ marginTop: division != '' ? "0px" : "80px" }}>
+      {/* Show dropdown only before division is selected */}
+      {!division && (
+        <>
+          <h3>Choose your Division</h3>
+          <select value={division} onChange={handleDivisionChange}>
+            <option value="">-- Select Division --</option>
+            <option value="Khordha">Khordha</option>
+            <option value="Waltair">Waltair</option>
+            <option value="Sambalpur">Sambalpur</option>
+          </select>
+        </>
+      )}
+      {division && (
+        <h3>{division} Division Map</h3>
+      )}
+      {division && (
+        <div className="upload-box">
+          <input type="file" accept="image/*" onChange={handleFileChange} />
+          {showBrowse && (
+            <button className="browse-btn" onClick={handleBrowse}>
+              Browse
+            </button>
+          )}
+        </div>
+      )}
       {previewURL && (
         <div className="picture-box">
           <img src={previewURL} alt="Preview" className="image-preview" />
