@@ -7,6 +7,7 @@ const View = () => {
   const [division, setDivision] = useState('');
   const imageRef = useRef(null);
 
+
   useEffect(() => {
     fetch('/dots.csv')
       .then(response => response.text())
