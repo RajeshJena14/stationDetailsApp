@@ -56,7 +56,7 @@
 }
 
 .station-table table {
-  width: 80%;
+  /* width: 80%; */ 
   text-align: center;
   border-collapse: collapse;
   background-color: #f9f9f9;

@@ -10,6 +10,7 @@ function Upload() {
   const [showTable, setShowTable] = useState(false);
   const [stationList, setStationList] = useState([]);
   const [stationFiles, setStationFiles] = useState({});
+  const [uploadStatus, setUploadStatus] = useState({});
   const [division, setDivision] = useState('');
 
   const handleFileChange = (e) => {
@@ -20,7 +21,7 @@ function Upload() {
       setPreviewURL('');
       const reader = new FileReader();
       reader.onloadend = () => {
-        localStorage.setItem('uploadedImage', reader.result); // save base64 image
+        localStorage.setItem('uploadedImage', reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -58,7 +59,39 @@ function Upload() {
   const handleStationUpload = (e, station) => {
     const file = e.target.files[0];
     if (file) {
-      setStationFiles(prev => ({ ...prev, [station]: file.name }));
+      setStationFiles(prev => ({ ...prev, [station]: file })); // ✅ store File object
+    }
+  };
+
+  const handleFileUpload = async (station) => {
+    const file = stationFiles[station];
+    if (!file || !division) {
+      alert('Missing station file or division.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('station_name', station);
+    formData.append('zone_name', division);
+    formData.append('image', file);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/stations/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setUploadStatus(prev => ({ ...prev, [station]: '✅ Uploaded' }));
+      } else {
+        console.error(result.error);
+        setUploadStatus(prev => ({ ...prev, [station]: '❌ Upload failed' }));
+      }
+    } catch (err) {
+      console.error(err);
+      setUploadStatus(prev => ({ ...prev, [station]: '❌ Upload error' }));
     }
   };
 
@@ -67,8 +100,7 @@ function Upload() {
   };
 
   return (
-    <div className="upload-container dashboard-content" style={{ marginTop: division != '' ? "0px" : "80px" }}>
-      {/* Show dropdown only before division is selected */}
+    <div className="upload-container dashboard-content" style={{ marginTop: division !== '' ? "0px" : "80px" }}>
       {!division && (
         <>
           <h3>Choose your Division</h3>
@@ -130,13 +162,20 @@ function Upload() {
                       />
                     </label>
                     {stationFiles[station] && (
-                      <div className="file-name">{stationFiles[station]}</div>
+                      <div className="file-name">{stationFiles[station].name}</div>
                     )}
                   </td>
                   <td>
-                    <label className="table-btn upload-label">
+                    <button
+                      className="table-btn upload-btn"
+                      onClick={() => handleFileUpload(station)}
+                      disabled={!stationFiles[station]}
+                    >
                       Upload
-                    </label>
+                    </button>
+                    {uploadStatus[station] && (
+                      <div className="file-status">{uploadStatus[station]}</div>
+                    )}
                   </td>
                 </tr>
               ))}

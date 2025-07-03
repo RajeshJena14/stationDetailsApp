@@ -8,7 +8,9 @@ function Dashboard() {
     const navigate = useNavigate();
 
     const handleDivisionChange = (e) => {
-        setDivision(e.target.value);
+        const selected = e.target.value;
+        setDivision(selected);
+        localStorage.setItem('selectedZone', selected); 
         if (e.target.value === 'Khordha') {
             navigate('/khordha');
         }
