@@ -73,10 +73,10 @@ function Upload() {
     const formData = new FormData();
     formData.append('station_name', station);
     formData.append('zone_name', division);
-    formData.append('image', file);
+    formData.append('mapImage', file);
 
     try {
-      const response = await fetch('http://localhost:5000/api/stations/upload', {
+      const response = await fetch(`http://localhost:5000/api/stations/${station}/map`, {
         method: 'POST',
         body: formData
       });

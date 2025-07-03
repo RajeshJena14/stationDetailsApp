@@ -10,36 +10,45 @@ const router = express.Router();
 const uploadPath = './uploads/stationMaps';
 if (!fs.existsSync(uploadPath)) fs.mkdirSync(uploadPath, { recursive: true });
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadPath),
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
-});
-
+// Use memory storage, not disk storage:
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-router.post('/upload', upload.single('image'), async (req, res) => {
+// POST /api/stations/:stationId/map
+router.post('/:stationId/map', upload.single('mapImage'), async (req, res) => {
   try {
-    const { station_name, zone_name } = req.body;
-
-    if (!req.file || !station_name || !zone_name) {
-      return res.status(400).json({ error: 'Missing required fields' });
+    const { stationId } = req.params;
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    const newMap = new StationMap({
-      stationName: station_name,
-      zoneName: zone_name,
-      filename: req.file.filename
+    const stationMap = new StationMap({
+      stationName: stationId,
+      zoneName: req.body.zone_name,
+      image: req.file.buffer,
+      contentType: req.file.mimetype
     });
 
-    await newMap.save();
+    await stationMap.save();
+    res.json({ message: 'Image stored in DB', id: stationMap._id });
 
-    res.status(200).json({
-      message: 'Station map uploaded and saved to MongoDB',
-      filename: req.file.filename
-    });
   } catch (err) {
-    console.error('❌ Upload error:', err);
+    console.error(err);
     res.status(500).json({ error: 'Upload failed' });
+  }
+});
+
+// GET /api/stations/map/:id to fetch image
+router.get('/map/:id', async (req, res) => {
+  try {
+    const map = await StationMap.findById(req.params.id);
+    if (!map) return res.status(404).json({ error: 'Not found' });
+    res.contentType(map.contentType);
+    res.send(map.image);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Fetch failed' });
   }
 });
 

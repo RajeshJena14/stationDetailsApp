@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 const MapSchema = new mongoose.Schema({
     stationName: {
-        type:String,
+        type: String,
         required: true
     },
     zoneName: {
-        type:String,
+        type: String,
         required: true
     },
-    filename: {
-        type: String,
+    image: {
+        type: Buffer,
         required: true
     },
     timestamp: {
