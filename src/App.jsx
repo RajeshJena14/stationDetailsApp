@@ -8,7 +8,7 @@ import View from './pages/View';
 import Login from './pages/Login';
 import Khordha from './pages/Khordha';
 import Admin from './pages/Admin';
-import DivisionLanding from './pages/DivisionLanding'; 
+import DivisionLanding from './pages/DivisionLanding';
 
 
 function App() {
