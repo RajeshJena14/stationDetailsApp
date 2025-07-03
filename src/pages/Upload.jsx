@@ -12,20 +12,24 @@ function Upload() {
   const [stationFiles, setStationFiles] = useState({});
   const [uploadStatus, setUploadStatus] = useState({});
   const [division, setDivision] = useState('');
+  const [zoneMapFile, setZoneMapFile] = useState(null);
+
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setMapImage(file);
+    setZoneMapFile(file);
+    setPreviewURL('');
     if (file) {
       setShowBrowse(true);
-      setPreviewURL('');
       const reader = new FileReader();
       reader.onloadend = () => {
-        localStorage.setItem('uploadedImage', reader.result);
+        localStorage.setItem('uploadedImage', reader.result); // optional
       };
       reader.readAsDataURL(file);
     }
   };
+
 
   const handleBrowse = () => {
     if (mapImage) {
@@ -95,6 +99,35 @@ function Upload() {
     }
   };
 
+  const uploadZoneMap = async () => {
+    if (!zoneMapFile || !division) {
+      alert('Please select a division and a file');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('zoneMap', zoneMapFile);
+    formData.append('zoneName', division);
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/zones/${division}/map`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert(`Zone map for ${division} uploaded successfully`);
+      } else {
+        alert('Upload failed: ' + data.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Zone map upload error');
+    }
+  };
+
+
   const handleDivisionChange = (e) => {
     setDivision(e.target.value);
   };
@@ -119,7 +152,7 @@ function Upload() {
         <div className="upload-box">
           <input type="file" accept="image/*" onChange={handleFileChange} />
           {showBrowse && (
-            <button className="browse-btn" onClick={handleBrowse}>
+            <button className="browse-btn" onClick={() => {handleBrowse(); uploadZoneMap();}}>
               Browse
             </button>
           )}

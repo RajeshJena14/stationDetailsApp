@@ -4,6 +4,8 @@ const cors = require('cors');
 // const multer = require('multer');
 const path = require('path');
 const stationRoutes = require('./routes/stationRoutes');
+const zoneRoutes = require('./routes/zoneRoutes');
+
 
 const app = express()
 const PORT = 5000
@@ -14,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 app.use('/api/stations', stationRoutes);
+app.use('/api/zones', zoneRoutes);
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {

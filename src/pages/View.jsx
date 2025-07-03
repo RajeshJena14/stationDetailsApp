@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
-import testImage from "../assets/testImage.png";
+// import testImage from "../assets/testImage.png";
 import './View.css';
 
 const View = () => {
   const [dots, setDots] = useState([]);
   const [division, setDivision] = useState('');
+  const [zoneMapUrl, setZoneMapUrl] = useState('');
   const imageRef = useRef(null);
 
 
@@ -24,9 +25,23 @@ const View = () => {
       });
   }, []);
 
-  const handleDivisionChange = (e) => {
-    setDivision(e.target.value);
-  };
+  const handleDivisionChange = async (e) => {
+  const selectedDivision = e.target.value;
+  setDivision(selectedDivision);
+
+  try {
+    const response = await fetch(`http://localhost:5000/api/zones/map/${selectedDivision}`);
+    if (!response.ok) throw new Error('Image fetch failed');
+    
+    const blob = await response.blob();
+    const imageUrl = URL.createObjectURL(blob);
+    setZoneMapUrl(imageUrl);
+  } catch (err) {
+    console.error(err);
+    alert('Failed to load zone map image');
+  }
+};
+
 
   return (
     <div className="dashboard-content" style={{ marginTop: division != '' ? "0px" : "80px" }}>
@@ -53,10 +68,11 @@ const View = () => {
           >
             <img
               ref={imageRef}
-              src={testImage}
-              alt="Mapped"
+              src={zoneMapUrl}
+              alt={`${division} Map`}
               style={{ border: '1px solid black', maxWidth: '100%', height: 'auto' }}
             />
+
             {dots.map(dot => (
               <a
                 key={dot.id}
