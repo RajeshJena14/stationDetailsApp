@@ -13,8 +13,8 @@
 
 .browse-btn,
 .scan-btn {
-    height:30px;
-    width:80px;
+  height:30px;
+  width:80px;
   padding: 2px ;
   font-size: 13px;
   background-color: #035e89;
@@ -49,14 +49,15 @@
   margin-top: 20px;
 }
 
-.station-table {
+.station-table { 
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  width: 70%;
 }
 
 .station-table table {
-  /* width: 80%; */ 
+  width: 100%;
   text-align: center;
   border-collapse: collapse;
   background-color: #f9f9f9;
@@ -96,6 +97,12 @@
 
 .upload-label input[type="file"] {
   display: none;
+}
+
+.upload-btn{
+  margin-top: 0;
+  font-weight: normal;
+  width: 50%;
 }
 
 .file-name {

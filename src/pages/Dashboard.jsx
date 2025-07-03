@@ -1,25 +1,8 @@
 import React from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import railLogo from 'C:/Users/rkjra/Desktop/Railway/FINAL/src/assets/Rail_logo.png';
 
 function Dashboard() {
-<<<<<<< HEAD
-    const [division, setDivision] = useState('Khordha');
-    const navigate = useNavigate();
-
-    const handleDivisionChange = (e) => {
-        const selected = e.target.value;
-        setDivision(selected);
-        localStorage.setItem('selectedZone', selected); 
-        if (e.target.value === 'Khordha') {
-            navigate('/khordha');
-        }
-    };
-
-=======
->>>>>>> f792f0f38b73db682a752b35a31d17e9037b3dba
     return (
         <div
             className="dashboard-container"
