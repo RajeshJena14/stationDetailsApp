@@ -1,4 +1,5 @@
-import React from 'react';
+// src/App.jsx
+import React, { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -10,12 +11,12 @@ import Khordha from './pages/Khordha';
 import Admin from './pages/Admin';
 import DivisionLanding from './pages/DivisionLanding';
 
-
 function App() {
   const location = useLocation();
-  const noSidebarRoutes = ['/login']; // Add more paths if needed
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const noSidebarRoutes = ['/login'];
 
-  const shouldShowSidebar = !noSidebarRoutes.includes(location.pathname);
+  const shouldShowSidebar = isLoggedIn && !noSidebarRoutes.includes(location.pathname);
 
   return (
     <div className="app">
@@ -27,11 +28,10 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/view" element={<View />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login onLoginSuccess={() => setIsLoggedIn(true)} />} />
             <Route path="/khordha" element={<Khordha />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/division" element={<DivisionLanding />} />
-
           </Routes>
         </main>
       </div>

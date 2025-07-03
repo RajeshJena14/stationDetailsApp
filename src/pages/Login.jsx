@@ -1,21 +1,15 @@
-
+// src/pages/Login.jsx
 import React, { useState } from "react";
 import "./Login.css";
 import Header from '../components/Header';
-
 import userIcon from "../assets/person.png";
 import passwordIcon from "../assets/password.png";
 import { useNavigate } from 'react-router-dom';
-
-<div className="app">
-    <Header />
-</div>
 
 function Login({ onLoginSuccess }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -23,15 +17,13 @@ function Login({ onLoginSuccess }) {
         if (!username || !password) {
             alert("Please enter both fields");
         } else {
-
-                navigate('/division');
-
+            onLoginSuccess(); // ✅ Tell App you are logged in
+            navigate('/division');
         }
     };
 
     return (
         <div className="login-container">
-
             <div className="login-box">
                 <h2>Login</h2>
                 <form onSubmit={handleLogin}>
@@ -57,7 +49,6 @@ function Login({ onLoginSuccess }) {
 
                     <button type="submit">Login</button>
                     <a href="#f" className="forgot-password">Forgot Password?</a>
-
                 </form>
             </div>
         </div>
