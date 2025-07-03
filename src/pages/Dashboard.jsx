@@ -1,6 +1,6 @@
 import React from 'react';
 import './Dashboard.css';
-import railLogo from 'C:/Users/rkjra/Desktop/Railway/FINAL/src/assets/Rail_logo.png';
+import railLogo from '../assets/Rail_logo.png';
 
 function Dashboard() {
     return (
