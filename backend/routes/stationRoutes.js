@@ -3,7 +3,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const StationMap = require('../models/stationMap');
+const StationMap = require('../models/StationMap');
 
 const router = express.Router();
 

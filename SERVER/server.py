@@ -12,7 +12,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# 🔐 Replace with your actual API key (hide it in production)
+# Replace with your actual API key (hide it in production)
 genai.configure(api_key="AIzaSyDjtw9P04RapooniWeM6Xj2cDA5QgsRsGw")  # ⚠️ Use environment variable in production
 
 @app.route('/process_stations', methods=['POST'])
