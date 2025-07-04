@@ -42,6 +42,9 @@ function Upload() {
   const handleScan = () => {
     const formData = new FormData();
     formData.append('image', mapImage);
+
+    formData.append('division', division);
+    
     fetch('http://127.0.0.1:5000/process_stations', {
       method: 'POST',
       body: formData
