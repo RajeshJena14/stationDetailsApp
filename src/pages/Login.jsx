@@ -23,7 +23,7 @@ function Login({ onLoginSuccess }) {
         if (!username || !password) {
             alert("Please enter both fields");
         } else {
-
+                localStorage.setItem("isLoggedIn", "true");
                 navigate('/division');
 
         }
