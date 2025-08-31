@@ -20,7 +20,9 @@ app = Flask(__name__)
 CORS(app)
 
 #genai.configure(api_key="AIzaSyDjtw9P04RapooniWeM6Xj2cDA5QgsRsGw")
-genai.configure(api_key="AIzaSyD-wFFgwoXN_FvDMlt2rBKInCyUZIJOpOM")
+#genai.configure(api_key="AIzaSyD-wFFgwoXN_FvDMlt2rBKInCyUZIJOpOM")
+genai.configure(api_key="AIzaSyAhikPKrwCoz0FcUByc0dfZYEsGvsJxB0I")
+
 
 def normalize_station_name(name):
     name = name.lower()
@@ -161,7 +163,7 @@ def process_stations():
         with Image.open(enhanced_path) as image:
             model = genai.GenerativeModel("gemini-1.5-flash")
             response = model.generate_content([prompt, image])
-
+        
         raw_text = response.text.strip()
         station_lines = [line.strip() for line in raw_text.split('\n') if line.strip()]
 

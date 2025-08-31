@@ -13,7 +13,7 @@ const View = () => {
     setDivision(selectedDivision);
 
     try {
-      const response = await fetch(`http://localhost:4000/api/zones/map/${selectedDivision}`);
+      const response = await fetch(`http://localhost:5000/api/zones/map/${selectedDivision}`);
       if (!response.ok) throw new Error('Image fetch failed');
 
       const blob = await response.blob();
