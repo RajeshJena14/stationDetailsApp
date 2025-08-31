@@ -44,7 +44,7 @@ function Upload() {
     formData.append('image', mapImage);
 
     formData.append('division', division);
-    
+
     fetch('http://127.0.0.1:5000/process_stations', {
       method: 'POST',
       body: formData
@@ -83,7 +83,7 @@ function Upload() {
     formData.append('mapImage', file);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/stations/${station}/map`, {
+      const response = await fetch(`http://localhost:4000/api/stations/${station}/map`, {
         method: 'POST',
         body: formData
       });
@@ -113,7 +113,7 @@ function Upload() {
     formData.append('zoneName', division);
 
     try {
-      const res = await fetch(`http://localhost:5000/api/zones/${division}/map`, {
+      const res = await fetch(`http://localhost:4000/api/zones/${division}/map`, {
         method: 'POST',
         body: formData,
       });
@@ -155,7 +155,7 @@ function Upload() {
         <div className="upload-box">
           <input type="file" accept="image/*" onChange={handleFileChange} />
           {showBrowse && (
-            <button className="browse-btn" onClick={() => {handleBrowse(); uploadZoneMap();}}>
+            <button className="browse-btn" onClick={() => { handleBrowse(); uploadZoneMap(); }}>
               Browse
             </button>
           )}
