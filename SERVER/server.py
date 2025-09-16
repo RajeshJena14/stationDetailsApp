@@ -21,7 +21,7 @@ CORS(app)
 
 #genai.configure(api_key="AIzaSyDjtw9P04RapooniWeM6Xj2cDA5QgsRsGw")
 #genai.configure(api_key="AIzaSyD-wFFgwoXN_FvDMlt2rBKInCyUZIJOpOM")
-genai.configure(api_key="AIzaSyAhikPKrwCoz0FcUByc0dfZYEsGvsJxB0I")
+genai.configure(api_key="AIzaSyB2R0WTqt5L9gk1D7VQba5QHf8RfAhIFAo")
 
 
 def normalize_station_name(name):
